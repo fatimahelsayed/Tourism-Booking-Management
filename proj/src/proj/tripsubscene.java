@@ -39,12 +39,12 @@ public class tripsubscene extends SubScene{
 
     public tripsubscene() throws FileNotFoundException {
         super(new AnchorPane(), 550, 300);
-        anchor = new AnchorPane();
+        anchor = new AnchorPane(); 
         prefWidth(550);
         prefHeight(300);
         
         setLayoutX(1024);
-        setLayoutY(175);
+        setLayoutY(165);
         
         setRoot(anchor);
     }
@@ -81,14 +81,31 @@ public class tripsubscene extends SubScene{
        BackgroundImage image = new BackgroundImage(temp, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
        anchor.setBackground(new Background(image));
     }
-
+    public void setPlatPack() throws FileNotFoundException
+    {
+       Image temp = new Image(new FileInputStream(back_image),550,300,false,true);	
+       BackgroundImage image = new BackgroundImage(temp, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
+       anchor.setBackground(new Background(image));
+    }
+    public void setGoldPack() throws FileNotFoundException
+    {
+       Image temp = new Image(new FileInputStream(back_image),550,300,false,true);	
+       BackgroundImage image = new BackgroundImage(temp, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
+       anchor.setBackground(new Background(image));
+    }
+    public void setSilPack() throws FileNotFoundException
+    {
+       Image temp = new Image(new FileInputStream(back_image),550,300,false,true);	
+       BackgroundImage image = new BackgroundImage(temp, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
+       anchor.setBackground(new Background(image));
+    }
     public void setTransition()
     {
         TranslateTransition trans = new TranslateTransition();
         trans.setDuration(Duration.seconds(0.9));
         trans.setNode(this);
         
-        trans.setToX(-550);
+        trans.setToX(-575);
         trans.play();
     }
     public void setTransition2()

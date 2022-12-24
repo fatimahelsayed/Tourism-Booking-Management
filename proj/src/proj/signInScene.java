@@ -6,10 +6,12 @@ package proj;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
@@ -23,14 +25,13 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.buttons;
-import model.loginButtons;
 import static proj.ViewManager.mainScene;
 import static proj.ViewManager.mainStage;
+import static proj.ViewManager.trip;
 
 /**
  *
@@ -48,6 +49,7 @@ public class signInScene extends Scene {
         stack = new StackPane();
         anchor = new AnchorPane();
         setBackground();
+        
         addrectangle();
         addSignInText();
         addTextFields();
@@ -92,6 +94,8 @@ public class signInScene extends Scene {
         lname.setFont(font);
         Text Age = new Text("             Age");
         Age.setFont(font);
+        Text Gender = new Text("        Gender");
+        Gender.setFont(font);
         Text username = new Text("Username");
         username.setFont(font);
         Text password = new Text("Password");
@@ -117,6 +121,15 @@ public class signInScene extends Scene {
         age.setPrefSize(150, 10);
         grid.add(Age, 0, 1);
         grid.add(age, 1, 1);
+        
+        ObservableList options2 = FXCollections.observableArrayList("Female","Male");
+        ComboBox gender = new ComboBox(options2);
+        gender.setStyle(" -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, white;\n" +
+"    -fx-background-insets: 0 0 -1 0, 0, 1, 2;\n" +
+"    -fx-background-radius: 3px, 3px, 2px, 1px;");
+        gender.setPrefSize(150, 10);
+        grid.add(Gender, 2, 1);
+        grid.add(gender, 3, 1);
         
         TextField user = new TextField();
         user.setPromptText("Ahmed123");
@@ -145,13 +158,16 @@ public class signInScene extends Scene {
         anchor.getChildren().add(signinButton);
         signinButton.setLayoutX(310);
         signinButton.setLayoutY(350);
+        signinButton.setOnAction((ActionEvent event) -> {
+            mainStage.setScene(trip);
+        });
         
         grid.setLayoutX(225);
         grid.setLayoutY(200);
         
         anchor.getChildren().add(grid);
     }
-        private void addHomeIcon() throws FileNotFoundException
+    private void addHomeIcon() throws FileNotFoundException
     {
         Image img = new Image(new FileInputStream(icon_path) , 50, 50, false, true);
         ImageView imgview = new ImageView(img);

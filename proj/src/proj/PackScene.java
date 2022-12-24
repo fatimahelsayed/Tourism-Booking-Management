@@ -10,10 +10,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -23,6 +27,10 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import static proj.ViewManager.mainStage;
+import static proj.ViewManager.pack;
+import static proj.ViewManager.seat;
+import proj.tripsubscene;
 
 /**
  *
@@ -30,28 +38,36 @@ import javafx.scene.text.Text;
  */
 public class PackScene extends Scene {
     
-     AnchorPane anchor;
+    AnchorPane anchor;
     AnchorPane anchor2;
     
+    ToggleGroup group = new ToggleGroup();
+    
+    public static String selectedpack;
+
+    tripsubscene platpack;
+    tripsubscene goldpack;
+    tripsubscene silpack;
     tripsubscene trips;
     
     private final String background_path = "F:\\Dell\\Documents\\Programming\\Projects\\Project\\resources\\images\\slay.jpg";
     private final static String font_path = "F:\\Dell\\Documents\\Programming\\Projects\\Project\\resources\\fonts\\static\\Montserrat-Medium.ttf";
     private final static String font_path2 = "F:\\Dell\\Documents\\Programming\\Projects\\Project\\resources\\fonts\\Masvis Italic.ttf";
+    private final static String icon_path = "F:\\Dell\\Documents\\Programming\\Projects\\Project\\resources\\images\\arrow.png";
     
     public PackScene() throws FileNotFoundException {
         super(new AnchorPane(), 1024, 500);
         anchor = new AnchorPane();
         anchor2 = new AnchorPane();
-        trips = new tripsubscene();
-        
+
+        //        System.out.println(getClass().getResource("marsaalam.jpg"));
+        createSubScenes();
         setBackground();    
-        getStylesheets().add(getClass().getResource("hoverbutton.css").toExternalForm());
+        getStylesheets().add(getClass().getResource("hoverbutton.css").toExternalForm());  
         addrectangle();
-//        System.out.println(getClass().getResource("marsaalam.jpg"));
         addText();
         addPackageFields();
-       // addPackageFields();
+        addarrowIcon();
         
         anchor.getChildren().add(trips);
         anchor.getChildren().add(anchor2);
@@ -62,6 +78,26 @@ public class PackScene extends Scene {
         Image image = new Image(background_path, 1024,500,false,true);
         BackgroundImage background = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
         anchor.setBackground(new Background(background));
+    }
+    private void createSubScenes() throws FileNotFoundException
+    {
+        platpack = new tripsubscene();
+        platpack.setPlatPack();
+        goldpack = new tripsubscene();
+        goldpack.setGoldPack();
+        silpack = new tripsubscene();
+        silpack.setSilPack();
+        trips = new tripsubscene();
+        anchor.getChildren().addAll(platpack, goldpack, silpack);
+    }
+    private void showSubScene(tripsubscene subScene)
+    {
+        if (trips != null)
+        {
+            trips.setTransition2();
+        }
+        subScene.setTransition();
+        trips = subScene;
     }
     private void addrectangle() throws FileNotFoundException
     {
@@ -90,78 +126,111 @@ public class PackScene extends Scene {
         packtype.setLayoutY(70);
         anchor2.getChildren().add(packtype);
         
-        ToggleGroup group = new ToggleGroup();
-        
-        RadioButton ftour = new RadioButton("Platinum");
-        RadioButton gtour = new RadioButton("Gold");
-        RadioButton ctour = new RadioButton("Silver");
+        RadioButton platinumpack = new RadioButton("Platinum");
+        RadioButton gpack = new RadioButton("Gold");
+        RadioButton silverpack = new RadioButton("Silver");
                 
-        anchor2.getChildren().addAll(ftour, gtour,ctour);
+        anchor2.getChildren().addAll(platinumpack, gpack,silverpack);
         
         Font font = Font.loadFont(new FileInputStream(font_path), 15);
-        ftour.setStyle("-fx-text-fill: white;");
-        ftour.setFont(font);
-        ftour.setLayoutX(450);
-        ftour.setLayoutY(100);
-        ftour.setToggleGroup(group);
-        ftour.selectedProperty().addListener(new ChangeListener<Boolean>() {
+        platinumpack.setStyle("-fx-text-fill: white;");
+        platinumpack.setFont(font);
+        platinumpack.setLayoutX(450);
+        platinumpack.setLayoutY(100);
+        platinumpack.setToggleGroup(group);
+        platinumpack.selectedProperty().addListener(new ChangeListener<Boolean>() {
     @Override
     public void changed(ObservableValue<? extends Boolean> obs, Boolean wasPreviouslySelected, Boolean isNowSelected) {
-        if (isNowSelected) {
-            try {
-                trips.setFamilyToursDes();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(TripScene.class.getName()).log(Level.SEVERE, null, ex);
+        if (isNowSelected) 
+        {
+            setPackage("Platinum");
+            showSubScene(platpack);
+        }
+    }});
+        
+        gpack.setToggleGroup(group);
+        gpack.setStyle("-fx-text-fill: white;");
+        gpack.setFont(font);
+        gpack.setLayoutX(650);
+        gpack.setLayoutY(100);
+        gpack.selectedProperty().addListener(new ChangeListener<Boolean>() {
+    @Override
+    public void changed(ObservableValue<? extends Boolean> obs, Boolean wasPreviouslySelected, Boolean isNowSelected) 
+    {
+        if (isNowSelected) 
+        { 
+            setPackage("Gold");
+            showSubScene(goldpack);
+        }
+    }});
+        
+        silverpack.setStyle("-fx-text-fill: white;");
+        silverpack.setFont(font);
+        silverpack.setLayoutX(850);
+        silverpack.setLayoutY(100);
+        silverpack.selectedProperty().addListener(new ChangeListener<Boolean>() {
+    @Override
+    public void changed(ObservableValue<? extends Boolean> obs, Boolean wasPreviouslySelected, Boolean isNowSelected) 
+    {
+        if (isNowSelected) 
+        { 
+            setPackage("Silver");
+            showSubScene(silpack);
+            System.out.println(selectedpack+" has been selected");
+        }
+    }});
+        
+    silverpack.setToggleGroup(group);
+    }
+     
+    private void addarrowIcon() throws FileNotFoundException
+    {
+        Image img = new Image(new FileInputStream(icon_path) , 50, 50, false, true);
+        ImageView imgview = new ImageView(img);
+        
+        anchor2.getChildren().add(imgview);
+        
+        imgview.setLayoutX(20);
+        imgview.setLayoutY(450);
+        imgview.setOnMouseEntered((MouseEvent event) -> {
+            imgview.setEffect(new DropShadow());
+        });
+        imgview.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                imgview.setEffect(null);
             }
-            trips.setTransition();
+        });
+        imgview.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {                    
+            Text error = new Text("Please choose one of these fields");
+            @Override
+            public void handle(MouseEvent event) {
+                if (group.getSelectedToggle() != null)
+                {
+                    error.setText("");
+                    mainStage.setScene(seat);
+                }
+                else 
+                {
+                    Font font = null;
+                    try {
+                        font = Font.loadFont(new FileInputStream(font_path), 15);
+                    } catch (FileNotFoundException ex) {
+                        Logger.getLogger(TripScene.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    error.setFont(font);
+                    error.setFill(Paint.valueOf("Red"));
+                    anchor2.getChildren().add(error);
+                    error.setLayoutX(20);
+                    error.setLayoutY(420);
+                }
+            }
             
-        } else {
-            trips.setTransition2();
-        }
+        });
     }
-});
-        
-        gtour.setToggleGroup(group);
-        gtour.setStyle("-fx-text-fill: white;");
-        gtour.setFont(font);
-        gtour.setLayoutX(650);
-        gtour.setLayoutY(100);
-        gtour.selectedProperty().addListener(new ChangeListener<Boolean>() {
-    @Override
-    public void changed(ObservableValue<? extends Boolean> obs, Boolean wasPreviouslySelected, Boolean isNowSelected) {
-        if (isNowSelected) { 
-            try {
-                trips.setGenToursDes();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(TripScene.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            trips.setTransition();
-        } else {
-            trips.setTransition2();
-        }
-    }
-});
-        
-        
-        ctour.setStyle("-fx-text-fill: white;");
-        ctour.setFont(font);
-        ctour.setLayoutX(850);
-        ctour.setLayoutY(100);
-        ctour.selectedProperty().addListener(new ChangeListener<Boolean>() {
-    @Override
-    public void changed(ObservableValue<? extends Boolean> obs, Boolean wasPreviouslySelected, Boolean isNowSelected) {
-        if (isNowSelected) { 
-            try {
-                trips.setCouplesToursDes();
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(TripScene.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            trips.setTransition();
-        } else {
-            trips.setTransition2();
-        }
-    }
-});
-        ctour.setToggleGroup(group);
+    public void setPackage(String pack)
+    {
+        selectedpack = pack;
     }
 }

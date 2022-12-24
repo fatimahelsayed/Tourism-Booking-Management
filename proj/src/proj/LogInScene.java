@@ -35,7 +35,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.buttons;
-import model.loginButtons;
 import static proj.ViewManager.mainScene;
 import static proj.ViewManager.mainStage;
 import static proj.ViewManager.trip;

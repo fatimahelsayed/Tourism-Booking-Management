@@ -1,8 +1,14 @@
 package proj;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import javafx.scene.Scene;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -13,7 +19,10 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import model.button;
+import static proj.PackScene.selectedpack;
 import proj.tripsubscene;
+import static proj.TripScene.selectedtour;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -25,10 +34,10 @@ import proj.tripsubscene;
  * @author DELL
  */
 public class Seats extends Scene{
-     AnchorPane anchor;
+    AnchorPane anchor;
     AnchorPane anchor2;
     
-    tripsubscene trips;
+    ToggleGroup group = new ToggleGroup();
     
     private final String background_path = "F:\\Dell\\Documents\\Programming\\Projects\\Project\\resources\\images\\slay.jpg";
     private final static String font_path = "F:\\Dell\\Documents\\Programming\\Projects\\Project\\resources\\fonts\\static\\Montserrat-Medium.ttf";
@@ -38,17 +47,15 @@ public class Seats extends Scene{
        super(new AnchorPane(), 1024, 500);
         anchor = new AnchorPane();
         anchor2 = new AnchorPane();
-        trips = new tripsubscene();
-        
+//        System.out.println(getClass().getResource("marsaalam.jpg"));
         setBackground();    
         getStylesheets().add(getClass().getResource("hoverbutton.css").toExternalForm());
         addrectangle();
-//        System.out.println(getClass().getResource("marsaalam.jpg"));
+        retrieve1();
+        retrieve2();
         addText();
-        addPackageFields();
-       // addPackageFields();
-        
-        anchor.getChildren().add(trips);
+        addCities();
+
         anchor.getChildren().add(anchor2);
         setRoot(anchor);
     }
@@ -75,17 +82,53 @@ public class Seats extends Scene{
         loginText.setLayoutY(100);
         loginText.setLayoutX(40);
     }
-     private void addPackageFields() throws FileNotFoundException
+    private void addCities() throws FileNotFoundException
     {
         Text packtype = new Text("Step 3: Choose your desired Place");
         Font font1 = Font.loadFont(new FileInputStream(font_path), 30);
         packtype.setFont(font1);
         packtype.setFill(Paint.valueOf("White"));
         packtype.setLayoutX(450);
-        packtype.setLayoutY(70);
-        anchor2.getChildren().add(packtype);
+        packtype.setLayoutY(150);
         
+        button luxor = new button("LUXOR");
+        luxor.setLayoutX(500);
+        luxor.setLayoutY(185);
+        
+        button alex = new button("ALEXANDRIA");
+        alex.setLayoutX(700);
+        alex.setLayoutY(185);
+        
+        button aswan = new button("ASWAN");
+        aswan.setLayoutX(500);
+        aswan.setLayoutY(250);
+        
+        button dahab = new button("DAHAB");
+        dahab.setLayoutX(700);
+        dahab.setLayoutY(250);
+        
+        anchor2.getChildren().addAll(packtype, luxor, alex, aswan, dahab);  
+        group.getToggles().addAll(luxor, alex, aswan, dahab);
     }
      
+    private void retrieve1() throws FileNotFoundException{
+         Text Tselected = new Text("You've choosen a "+ selectedtour +" tour type ");
+         Font fonts = Font.loadFont(new FileInputStream(font_path), 30);
+         Tselected.setFont(fonts);
+         Tselected.setFill(Paint.valueOf("White"));
+         anchor2.getChildren().add(Tselected);
+         Tselected.setLayoutX(450);
+         Tselected.setLayoutY(70);  
+    }
+    private void retrieve2() throws FileNotFoundException {     
+        Text Pselected = new Text ("of package type: " + selectedpack);
+        Font fonts = Font.loadFont(new FileInputStream(font_path), 30);
+        Pselected.setFont(fonts);
+        Pselected.setFill(Paint.valueOf("White"));
+        anchor2.getChildren().add(Pselected);
+        Pselected.setLayoutX(450);
+        Pselected.setLayoutY(100);  
+    }
      
+
 }

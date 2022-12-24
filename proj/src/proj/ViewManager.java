@@ -38,6 +38,8 @@ public class ViewManager {
     static Stage mainStage;
     public LogInScene login;
     public signInScene signin;
+    static PackScene pack;
+    static Seats seat;
     static TripScene trip;
 
     private final static int WIDTH = 1024;
@@ -46,6 +48,7 @@ public class ViewManager {
     List<buttons> menuButtons;
     public ViewManager() throws FileNotFoundException
     {
+        mainStage = new Stage();
         grid = new GridPane();
         grid.setHgap(5);
         grid.setVgap(5);
@@ -55,7 +58,6 @@ public class ViewManager {
         menuButtons = new ArrayList<>();
         mainPane = new AnchorPane();
         mainScene = new Scene(mainPane,WIDTH, HEIGHT);
-        mainStage = new Stage();
         mainStage.setScene(mainScene);
         addwelcomeText();
         setBackground();
@@ -70,6 +72,8 @@ public class ViewManager {
         signin = new signInScene();
         login = new LogInScene();
         trip = new TripScene();
+        pack = new PackScene();
+        seat = new Seats();
     }
     private void addButtons(buttons button)
     {
