@@ -16,7 +16,7 @@ public class Proj extends Application {
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
         ViewManager manager = new ViewManager();
-        primaryStage.setScene(new TripScene());
+        primaryStage.setScene(new Seats());
         primaryStage.show();
     }
 

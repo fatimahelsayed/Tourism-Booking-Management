@@ -33,8 +33,9 @@ public class tripsubscene extends SubScene{
     
     AnchorPane anchor;
     
-    String back_image = "F:\\Dell\\Documents\\Programming\\Projects\\Project\\resources\\images\\mo-gabrail-iuC3w8mLDcs-unsplash.jpg";
+    private final String back_image = "F:\\Dell\\Documents\\Programming\\Projects\\Project\\resources\\images\\mo-gabrail-iuC3w8mLDcs-unsplash.jpg";
     private final static String font_path = "F:\\Dell\\Documents\\Programming\\Projects\\Project\\resources\\fonts\\static\\Montserrat-Medium.ttf";
+    private final String close_icon = "F:\\Dell\\Documents\\Programming\\Projects\\Project\\resources\\images\\xbutton.png";
 
     public tripsubscene() throws FileNotFoundException {
         super(new AnchorPane(), 550, 300);
@@ -47,44 +48,38 @@ public class tripsubscene extends SubScene{
         
         setRoot(anchor);
     }
+    public void addCloseIcon()
+    {
+    
+    }
+   
     public void setFamilyToursDes() throws FileNotFoundException
     {
-        Image temp = new Image(new FileInputStream(back_image),550,300,false,true);
-        int width = (int)temp.getWidth(); 
-        int height = (int)temp.getHeight(); 
-
-        WritableImage wImage = new WritableImage(width, height);   
-        PixelReader pixelReader = temp.getPixelReader(); 
-        WritableImage view = new WritableImage(width,height);
-        PixelWriter writer = view.getPixelWriter();
-
-       for(int y = 0; y < height; y++) { 
-         for(int x = 0; x < width; x++) { 
-            Color color = pixelReader.getColor(x, y); 
-            writer.setColor(x, y, color.darker());              
-         }
-       }	
-       ImageView viewing = new ImageView(view);
-       BackgroundImage image = new BackgroundImage(viewing.getImage(), BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
+        Image temp = new Image(new FileInputStream(back_image),550,300,false,true);	
+       BackgroundImage image = new BackgroundImage(temp, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
        anchor.setBackground(new Background(image));
         
-//       Text familydes = new Text("Family trips are a great way for children to meet and interact with other kids"
-//                    + " from around the world who are close to their own age and share common interests. It’s not uncommon"
-//                    + " for families who meet on our trips to stay close after the trip ends; some even make the experience"
-//                    + " an annual tradition.");
-//        Font font = Font.loadFont(new FileInputStream(font_path), 20);
-//        familydes.setFont(font);
-//        familydes.setFill(Paint.valueOf("White"));
-//        anchor.getChildren().add(familydes);
-//        familydes.setLayoutY(100);
+       Text familydes = new Text("Family trips are a great way for children to meet and\n interact with other kids"
+                    + " from around the world who are close to their own age and share\n common interests. It’s not uncommon"
+                    + " for families who meet on our trips to stay close after the trip\n ends; some even make the experience"
+                    + "\nan annual tradition.");
+        Font font = Font.loadFont(new FileInputStream(font_path), 20);
+        familydes.setFont(font);
+        familydes.setFill(Paint.valueOf("White"));
+        anchor.getChildren().add(familydes);
+        familydes.setLayoutY(100);
     }
-    public void setGenToursDes()
+    public void setGenToursDes() throws FileNotFoundException
     {
-        
+       Image temp = new Image(new FileInputStream(back_image),550,300,false,true);	
+       BackgroundImage image = new BackgroundImage(temp, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
+       anchor.setBackground(new Background(image));
     }
-    public void setCouplesToursDes()
+    public void setCouplesToursDes() throws FileNotFoundException
     {
-        
+       Image temp = new Image(new FileInputStream(back_image),550,300,false,true);	
+       BackgroundImage image = new BackgroundImage(temp, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
+       anchor.setBackground(new Background(image));
     }
 
     public void setTransition()
@@ -93,7 +88,7 @@ public class tripsubscene extends SubScene{
         trans.setDuration(Duration.seconds(0.9));
         trans.setNode(this);
         
-        trans.setToX(-500);
+        trans.setToX(-550);
         trans.play();
     }
     public void setTransition2()

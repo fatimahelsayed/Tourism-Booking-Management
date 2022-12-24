@@ -13,10 +13,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/proj/src/proj/TripScene.java</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/proj/src/proj/PackScene.java</file>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/proj/src/proj/tripsubscene.java</file>
-            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/proj/src/proj/LogInScene.java</file>
-            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/proj/src/proj/signInScene.java</file>
-            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/proj/src/proj/hoverbutton.css</file>
+            <file>file:/C:/Users/DELL/Documents/NetBeansProjects/proj/src/proj/Seats.java</file>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/proj/src/proj/Proj.java</file>
             <file>file:/C:/Users/DELL/Documents/NetBeansProjects/proj/src/proj/ViewManager.java</file>
         </group>
